@@ -1,0 +1,10 @@
+services:
+  uptime-kuma:
+    image: louislam/uptime-kuma:2
+    pull_policy: never
+    container_name: uptime-kuma
+    restart: always
+    ports:
+      - "__KUMA_PORT__:3001"
+    volumes:
+      - /home/uptime-kuma/data:/app/data

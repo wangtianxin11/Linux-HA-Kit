@@ -21,7 +21,7 @@ source "${SCRIPT_DIR}/lib/config.sh"
 source "${SCRIPT_DIR}/lib/component_config.sh"
 
 # ─── 支持的组件列表 ───────────────────────────────────────────
-ALL_COMPONENTS=("mysql" "redis" "nacos" "mongodb" "nginx")
+ALL_COMPONENTS=("mysql" "redis" "nacos" "mongodb" "nginx" "docker" "dpanel" "emqx" "uptime-kuma")
 HA_ONLY_COMPONENTS=("keepalived")
 
 # ─── 环境检查 ─────────────────────────────────────────────────

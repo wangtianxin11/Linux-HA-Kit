@@ -1,0 +1,18 @@
+services:
+  emqx:
+    image: emqx/emqx-enterprise:6.2.0
+    pull_policy: never
+    container_name: emqx-enterprise
+    hostname: node1.emqx.com
+    restart: always
+    environment:
+      - EMQX_NODE_NAME=emqx@node1.emqx.com
+    ports:
+      - "__EMQX_MQTT_PORT__:1883"
+      - "__EMQX_WS_PORT__:8083"
+      - "__EMQX_WSS_PORT__:8084"
+      - "__EMQX_MQTTS_PORT__:8883"
+      - "__EMQX_DASHBOARD_PORT__:18083"
+    volumes:
+      - /home/emqx/data:/opt/emqx/data
+      - /home/emqx/log:/opt/emqx/log
