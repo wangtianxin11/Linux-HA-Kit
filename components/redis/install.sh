@@ -103,8 +103,6 @@ _do_install_local() {
     chmod +x /usr/sbin/policy-rc.d
 
     if ! DEBIAN_FRONTEND=noninteractive dpkg -i "${deb_files[@]}" 2>/dev/null; then
-        log_warn "dpkg 安装出错，尝试修复依赖..."
-        apt-get install -f -y 2>/dev/null || true
         DEBIAN_FRONTEND=noninteractive dpkg -i "${deb_files[@]}" || {
             rm -f /usr/sbin/policy-rc.d
             log_error "Redis 安装失败，请检查离线包完整性"

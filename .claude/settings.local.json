@@ -15,7 +15,22 @@
       "Bash(ssh -o StrictHostKeyChecking=no -o ConnectTimeout=10 -o BatchMode=yes root@192.168.10.106 \"echo connected\" 2>&1 || echo \"需要密码认证\")",
       "Bash(find /Users/project/java/huicheng/套件/热备安装/packages/mysql/noble -type f | xargs ls -lh)",
       "Bash(git init:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git remote:*)",
+      "Bash(git pull:*)",
+      "Bash(git push:*)",
+      "Bash(gh --version 2>&1 | head -1 && ls /Users/project/java/huicheng/套件/热备安装/packages/)",
+      "Bash(brew install:*)",
+      "Bash(gh auth:*)",
+      "Bash(git tag:*)",
+      "Bash(gh release:*)",
+      "Bash(ls /Users/project/java/huicheng/套件/热备安装/packages/ 2>/dev/null | grep -i mongo; find /Users/project/java/huicheng/套件/热备安装/packages -name \"*mongo*\" 2>/dev/null)",
+      "Bash(wc -l /Users/project/java/huicheng/套件/热备安装/components/mongodb/install.sh && bash -n /Users/project/java/huicheng/套件/热备安装/components/mongodb/install.sh && echo \"语法检查通过\")",
+      "Bash(bash -n /Users/project/java/huicheng/套件/热备安装/components/mongodb/install.sh && echo \"语法OK\" && wc -l /Users/project/java/huicheng/套件/热备安装/components/mongodb/install.sh)",
+      "Bash(tar -tzf \"/Users/project/java/huicheng/套件/热备安装/packages/mongodb/noble/mongodb-5-offline-complete.tar.gz\" | grep \"\\\\.deb\")",
+      "Bash(sshpass -p 'g4v*K8Vmh#kD' ssh -o StrictHostKeyChecking=no root@192.168.10.106 'systemctl status mongod | head -20')",
+      "Bash(which ssh:*)",
+      "Bash(ls /Users/project/java/huicheng/套件/热备安装/packages/sshpass*.deb 2>/dev/null || echo \"not found\")"
     ]
   }
 }

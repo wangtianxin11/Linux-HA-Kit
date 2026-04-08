@@ -82,8 +82,6 @@ _do_install_local() {
 
     # 先尝试全部安装，失败则 apt-get -f 修复依赖后重试
     if ! dpkg -i "${deb_files[@]}" 2>/dev/null; then
-        log_warn "dpkg 报依赖问题，尝试 apt-get install -f 修复..."
-        apt-get install -f -y 2>/dev/null || true
         dpkg -i "${deb_files[@]}" || {
             rm -f /usr/sbin/policy-rc.d
             log_error "keepalived 安装失败，请检查离线包完整性"

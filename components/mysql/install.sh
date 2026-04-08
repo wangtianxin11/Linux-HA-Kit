@@ -123,10 +123,7 @@ _do_install_local() {
         deb_file=$(find "${work_dir}" -maxdepth 1 -name "${prefix}*.deb" 2>/dev/null | head -1)
         if [ -n "${deb_file}" ]; then
             log_info "安装: $(basename "${deb_file}")"
-            DEBIAN_FRONTEND=noninteractive dpkg -i "${deb_file}" || {
-                log_warn "dpkg 安装出错，尝试修复依赖..."
-                apt-get install -f -y 2>/dev/null || true
-            }
+            DEBIAN_FRONTEND=noninteractive dpkg -i "${deb_file}"
         else
             log_warn "未找到组件包: ${prefix}*.deb，跳过"
         fi

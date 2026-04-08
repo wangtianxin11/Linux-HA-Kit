@@ -192,3 +192,53 @@ run_remote ... "MODE=standalone HA_NODE=1 SERVER_ID_OVERRIDE=2 bash install.sh"
 ```bash
 INSTALL_COMPONENTS=${INSTALL_COMPONENTS:-}
 ```
+
+---
+
+## 离线包制作方法
+
+在**有网络的同架构 Ubuntu 机器**上执行以下步骤，生成离线安装包后传输到目标服务器。
+
+### 方法一：apt-offline（推荐，自动解析全部依赖）
+
+```bash
+# 1. 安装 apt-offline 工具
+sudo apt update
+sudo apt install -y apt-offline
+
+# 2. 生成签名文件（记录所需包及依赖信息）
+sudo apt-offline set <包名>.sig --install-packages <包名>
+
+# 3. 根据签名文件下载所有包到目录
+mkdir -p offline-debs
+sudo apt-offline get <包名>.sig --download-dir offline-debs
+
+# 4. 打包成 tar.gz
+tar -czf <包名>-offline-complete.tar.gz -C offline-debs .
+
+# 5. 离线机器解压后安装
+tar -xzf <包名>-offline-complete.tar.gz -C /tmp/offline-debs
+dpkg -i /tmp/offline-debs/*.deb
+```
+
+### 方法二：apt-get --download-only（简单快速）
+
+```bash
+# 下载指定包及所有依赖
+mkdir -p offline-debs
+apt-get install --download-only -o Dir::Cache::archives="$(pwd)/offline-debs" <包名>=<版本号>
+
+# 打包成 tar.gz
+tar -czf <包名>-offline-complete.tar.gz -C offline-debs .
+
+# 离线机器解压后安装
+tar -xzf <包名>-offline-complete.tar.gz -C /tmp/offline-debs
+dpkg -i /tmp/offline-debs/*.deb
+```
+
+### 注意事项
+
+- 下载机器的 Ubuntu 版本（codename）必须与目标机器一致，否则 deb 包不兼容
+- 包目录按 Ubuntu 代号存放：`packages/<组件>/<codename>/`，安装脚本会自动匹配
+- 常见 codename：`focal`（20.04）、`jammy`（22.04）、`noble`（24.04）
+- MongoDB 各版本的包名示例：`mongodb-org=5.0.32`、`mongodb-org=6.0.x`、`mongodb-org=7.0.x`
