@@ -1,0 +1,64 @@
+# MySQL 双主热备配置模板
+# 占位符:
+#   __MYSQL_PORT__              → 端口
+#   __SERVER_ID__               → 主机1=1，主机2=2
+#   __AUTO_INCREMENT_OFFSET__   → 主机1=1，主机2=2
+
+[mysqld]
+pid-file                        = /var/run/mysqld/mysqld.pid
+socket                          = /var/run/mysqld/mysqld.sock
+datadir                         = /var/lib/mysql
+log-error                       = /var/log/mysql/error.log
+port                            = __MYSQL_PORT__
+
+# ── 字符集 ────────────────────────────────────────────────────
+character-set-server            = utf8mb4
+collation-server                = utf8mb4_unicode_ci
+
+# ── 认证 ──────────────────────────────────────────────────────
+default_authentication_plugin   = mysql_native_password
+
+# ── 大小写 ────────────────────────────────────────────────────
+# 只在初始化时生效，初始化后不可更改
+lower_case_table_names          = 0
+
+# ── 事务 ──────────────────────────────────────────────────────
+transaction_isolation           = READ-COMMITTED
+
+# ── 连接 ──────────────────────────────────────────────────────
+max_connections                 = 1000
+
+# ── InnoDB ────────────────────────────────────────────────────
+innodb_buffer_pool_size         = 32G
+innodb_buffer_pool_instances    = 8
+innodb_read_io_threads          = 8
+innodb_write_io_threads         = 8
+innodb_flush_log_at_trx_commit  = 1
+innodb_flush_method             = O_DIRECT
+
+# ── 刷盘 ──────────────────────────────────────────────────────
+sync_binlog                     = 1
+
+# ── 双主复制 ──────────────────────────────────────────────────
+server_id                       = __SERVER_ID__
+log_bin                         = mysql-bin
+binlog_format                   = ROW
+
+# GTID 模式（双主推荐）
+gtid_mode                       = on
+enforce_gtid_consistency        = 1
+
+# 将复制事件写入 binlog，双主必须开启
+log-slave-updates               = true
+
+# 自增偏移（主机1生成奇数ID，主机2生成偶数ID，避免主键冲突）
+auto_increment_increment        = 2
+auto_increment_offset           = __AUTO_INCREMENT_OFFSET__
+
+# 忽略系统库复制
+binlog-ignore-db                = information_schema,mysql,performance_schema,sys
+
+# ── 日志 ──────────────────────────────────────────────────────
+slow_query_log                  = 1
+slow_query_log_file             = /var/log/mysql/slow.log
+long_query_time                 = 2

@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(chmod +x \"/Users/project/java/huicheng/套件/热备安装/install.sh\")",
+      "Bash(bash -n \"/Users/project/java/huicheng/套件/热备安装/lib/config.sh\" && echo \"语法OK\")",
+      "Bash(bash -n \"/Users/project/java/huicheng/套件/热备安装/lib/common.sh\" && echo \"语法OK\")",
+      "Bash(bash -n \"/Users/project/java/huicheng/套件/热备安装/install.sh\" && \\\\\nbash -n \"/Users/project/java/huicheng/套件/热备安装/lib/component_config.sh\" && \\\\\nbash -n \"/Users/project/java/huicheng/套件/热备安装/components/mysql/config.sh\" && \\\\\nbash -n \"/Users/project/java/huicheng/套件/热备安装/components/redis/config.sh\" && \\\\\nbash -n \"/Users/project/java/huicheng/套件/热备安装/components/nacos/config.sh\" && \\\\\nbash -n \"/Users/project/java/huicheng/套件/热备安装/components/mongodb/config.sh\" && \\\\\nbash -n \"/Users/project/java/huicheng/套件/热备安装/components/nginx/config.sh\" && \\\\\nbash -n \"/Users/project/java/huicheng/套件/热备安装/components/keepalived/config.sh\" && \\\\\necho \"全部语法OK\")",
+      "Bash(for f:*)",
+      "Bash(bash -n \"/Users/project/java/huicheng/套件/热备安装/lib/menu.sh\" && echo \"语法OK\")",
+      "mcp__Fetch__fetch",
+      "Bash(bash -n \"/Users/project/java/huicheng/套件/热备安装/components/mysql/install.sh\" && echo \"语法OK\")",
+      "Bash(tar -tf \"/Users/project/java/huicheng/套件/热备安装/packages/mysql-server_8.0.45-1ubuntu24.04_amd64.deb-bundle.tar\")",
+      "Bash(ls /Users/project/java/huicheng/套件/热备安装/components/mysql/conf/ && cat /Users/project/java/huicheng/套件/热备安装/components/mysql/conf/*.cnf 2>/dev/null | head -80)",
+      "Bash(which sshpass:*)",
+      "Bash(ssh -o StrictHostKeyChecking=no -o ConnectTimeout=10 -o BatchMode=yes root@192.168.10.106 \"echo connected\" 2>&1 || echo \"需要密码认证\")",
+      "Bash(find /Users/project/java/huicheng/套件/热备安装/packages/mysql/noble -type f | xargs ls -lh)",
+      "Bash(git init:*)",
+      "Bash(git add:*)"
+    ]
+  }
+}

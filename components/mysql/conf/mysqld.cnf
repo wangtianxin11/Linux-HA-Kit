@@ -1,0 +1,68 @@
+# Copyright (c) 2014, 2025, Oracle and/or its affiliates.
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License, version 2.0,
+# as published by the Free Software Foundation.
+#
+# This program is designed to work with certain software (including
+# but not limited to OpenSSL) that is licensed under separate terms,
+# as designated in a particular file or component or in included license
+# documentation.  The authors of MySQL hereby grant you an additional
+# permission to link the program and your derivative works with the
+# separately licensed software that they have either included with
+# the program or referenced in the documentation.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License, version 2.0, for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301  USA
+
+#
+# The MySQL  Server configuration file.
+#
+# For explanations see
+# http://dev.mysql.com/doc/mysql/en/server-system-variables.html
+
+[mysqld]
+pid-file	= /var/run/mysqld/mysqld.pid
+socket		= /var/run/mysqld/mysqld.sock
+datadir		= /var/lib/mysql
+log-error	= /var/log/mysql/error.log
+
+server_id = 3
+# 开启binlog，数据同步的关键
+log_bin = mysql-bin
+binlog_format = ROW
+# 事务隔离级别, 不可重复度
+transaction_isolation = READ-COMMITTED
+# 自增起始位置
+auto_increment_offset = 1
+# 自增递增, 两个主库保持不同即可
+auto_increment_increment = 2
+# 主从复制模式开启
+gtid_mode = on
+enforce_gtid_consistency = 1
+# 从库连接
+default_authentication_plugin = mysql_native_password
+# 将复制事件写入binlog,一台服务器既做主库又做从库此选项必须要开启
+log-slave-updates = true 
+# 开启表名小写转换，表名叫规范可以不开启，大小写表名混用建议开启
+# 同时需要注意这个配置只有在数据库初始化时才会生效，初始化之后mysql会报异常，提示不允许更新
+lower_case_table_names = 0
+innodb_buffer_pool_size = 32G
+# 允许最大连接数
+max_connections = 1000
+# 设置缓存池大小
+innodb_buffer_pool_instances = 8
+#设置线程核心数
+innodb_read_io_threads = 8
+innodb_write_io_threads = 8
+# 刷盘机制
+innodb_flush_log_at_trx_commit = 1
+sync_binlog = 1
+# 忽略的库
+binlog-ignore-db = information_schema,mysql,performance_schema,sys

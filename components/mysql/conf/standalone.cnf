@@ -1,0 +1,42 @@
+# MySQL 单机配置模板
+# 占位符: __MYSQL_PORT__
+
+[mysqld]
+pid-file                        = /var/run/mysqld/mysqld.pid
+socket                          = /var/run/mysqld/mysqld.sock
+datadir                         = /var/lib/mysql
+log-error                       = /var/log/mysql/error.log
+port                            = __MYSQL_PORT__
+
+# ── 字符集 ────────────────────────────────────────────────────
+character-set-server            = utf8mb4
+collation-server                = utf8mb4_unicode_ci
+
+# ── 认证 ──────────────────────────────────────────────────────
+default_authentication_plugin   = mysql_native_password
+
+# ── 大小写 ────────────────────────────────────────────────────
+# 只在初始化时生效，初始化后不可更改
+lower_case_table_names          = 0
+
+# ── 事务 ──────────────────────────────────────────────────────
+transaction_isolation           = READ-COMMITTED
+
+# ── 连接 ──────────────────────────────────────────────────────
+max_connections                 = 1000
+
+# ── InnoDB ────────────────────────────────────────────────────
+innodb_buffer_pool_size         = 32G
+innodb_buffer_pool_instances    = 8
+innodb_read_io_threads          = 8
+innodb_write_io_threads         = 8
+innodb_flush_log_at_trx_commit  = 1
+innodb_flush_method             = O_DIRECT
+
+# ── 刷盘 ──────────────────────────────────────────────────────
+sync_binlog                     = 1
+
+# ── 日志 ──────────────────────────────────────────────────────
+slow_query_log                  = 1
+slow_query_log_file             = /var/log/mysql/slow.log
+long_query_time                 = 2
